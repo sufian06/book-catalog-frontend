@@ -1,21 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import ProductCard from "../components/ProductCard";
+import { useGetBooksQuery } from "../redux/api/apiSlice";
+import { IProduct } from "../types/productTypes";
+
 export default function Products() {
+  const { data, isLoading, error } = useGetBooksQuery(undefined);
+
   return (
-    <div className="mt-4">
-      <div className="card card-compact w-96 bg-base-100 shadow-xl">
-        <figure>
-          <img
-            src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-            alt="Shoes"
-          />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Buy Now</button>
-          </div>
-        </div>
-      </div>
+    <div className="mt-4 flex">
+      {data?.data?.map((product: IProduct) => (
+        <ProductCard key={product.title} product={product} />
+      ))}
     </div>
   );
 }
