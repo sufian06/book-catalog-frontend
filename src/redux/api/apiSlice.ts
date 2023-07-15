@@ -8,7 +8,7 @@ export const api = createApi({
       query: () => "/books",
     }),
     singleBook: builder.query({
-      query: (id) => `/${id as string}`,
+      query: (id) => `/books/${id as string}`,
     }),
   }),
 });
