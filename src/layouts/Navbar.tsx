@@ -16,7 +16,7 @@ const Navbar = () => {
         <Link to="/">Home</Link>
       </li>
       <li className="hover:bg-accent hover:text-white rounded-md">
-        <Link to="/all-books">All Books</Link>
+        <Link to="/books">All Books</Link>
       </li>
 
       {user?.uid ? (
