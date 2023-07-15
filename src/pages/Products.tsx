@@ -8,10 +8,12 @@ import { IProduct } from "../types/productTypes";
 export default function Products() {
   const { data, isLoading, error } = useGetBooksQuery(undefined);
 
+  // console.log(data.data);
+
   return (
-    <div className="mt-4 flex">
+    <div className="mt-4 flex flex-wrap gap-4">
       {data?.data?.map((product: IProduct) => (
-        <ProductCard key={product.title} product={product} />
+        <ProductCard key={product._id} product={product} />
       ))}
     </div>
   );
