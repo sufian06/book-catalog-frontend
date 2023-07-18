@@ -29,9 +29,14 @@ const Navbar = () => {
           </li>
         </>
       ) : (
-        <li className="hover:bg-accent hover:text-white rounded-md">
-          <Link to="/login">Login</Link>
-        </li>
+        <>
+          <li className="hover:bg-accent hover:text-white rounded-md">
+            <Link to="/login">Login</Link>
+          </li>
+          <li className="hover:bg-accent hover:text-white rounded-md">
+            <Link to="/signup">Signup</Link>
+          </li>
+        </>
       )}
     </React.Fragment>
   );
