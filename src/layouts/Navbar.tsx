@@ -1,90 +1,108 @@
-import { signOut } from "firebase/auth";
-import React from "react";
-import { Link } from "react-router-dom";
-import { auth } from "../lib/firebase.config";
-import { setUser } from "../redux/features/user/userSlice";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { auth } from '@/lib/firebase';
+import { setUser } from '@/redux/features/user/userSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { signOut } from 'firebase/auth';
+import { HiOutlineSearch } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
+import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
+import { Button } from '../components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../components/ui/dropdown-menu';
 
-const Navbar = () => {
+export default function Navbar() {
   const { user } = useAppSelector((state) => state.user);
 
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
-    console.log("Logout");
+    console.log('logout');
     signOut(auth).then(() => {
-      // Sign-out successful.
+      // Sign-out successfully
       dispatch(setUser(null));
     });
   };
 
-  const menuItems = (
-    <React.Fragment>
-      <li className="hover:bg-accent hover:text-white rounded-md">
-        <Link to="/">Home</Link>
-      </li>
-      <li className="hover:bg-accent hover:text-white rounded-md">
-        <Link to="/books">All Books</Link>
-      </li>
-
-      {user?.email ? (
-        <>
-          <li className="hover:bg-accent hover:text-white rounded-md">
-            <Link to="/books/add-new-book">Add New</Link>
-          </li>
-          <li className="hover:bg-accent hover:text-white rounded-md">
-            <button onClick={handleLogout}>Sign out</button>
-          </li>
-        </>
-      ) : (
-        <>
-          <li className="hover:bg-accent hover:text-white rounded-md">
-            <Link to="/login">Login</Link>
-          </li>
-          <li className="hover:bg-accent hover:text-white rounded-md">
-            <Link to="/signup">Signup</Link>
-          </li>
-        </>
-      )}
-    </React.Fragment>
-  );
-
   return (
-    <div className="navbar flex justify-between bg-slate-100">
-      <div className="navbar-start ">
-        <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </label>
-          <ul
-            tabIndex={1}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            {menuItems}
-          </ul>
+    <nav className="w-full h-16 fixed top backdrop-blur-lg z-10">
+      <div className="h-full w-full bg-white/60">
+        <div className="flex items-center justify-between w-full md:max-w-7xl h-full mx-auto ">
+          <div>
+            {/* <img className="h-8" src={logo} alt="log" /> */}
+            <Link to="/" className="font-bold text-2xl">
+              BookCatalog
+            </Link>
+          </div>
+          <div>
+            <ul className="flex items-center">
+              <li>
+                <Button variant="link" asChild>
+                  <Link to="/">Home</Link>
+                </Button>
+              </li>
+              <li>
+                <Button variant="link" asChild>
+                  <Link to="/books">All Books</Link>
+                </Button>
+              </li>
+              <li>
+                <Button variant="link" asChild>
+                  <Link to="/checkout">Checkout</Link>
+                </Button>
+              </li>
+              <li>
+                <Button variant="ghost">
+                  <HiOutlineSearch size="25" />
+                </Button>
+              </li>
+              <li className="ml-5">
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="outline-none">
+                    <Avatar>
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="cursor-pointer">
+                      Profile
+                    </DropdownMenuItem>
+                    {!user.email && (
+                      <>
+                        <Link to="/login">
+                          <DropdownMenuItem className="cursor-pointer">
+                            Login
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link to="/signup">
+                          <DropdownMenuItem className="cursor-pointer">
+                            Sign up
+                          </DropdownMenuItem>
+                        </Link>
+                      </>
+                    )}
+                    {user.email && (
+                      <DropdownMenuItem
+                        onClick={handleLogout}
+                        className="cursor-pointer"
+                      >
+                        Logout
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </li>
+            </ul>
+          </div>
         </div>
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
-          Book Catalog
-        </Link>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal p-0">{menuItems}</ul>
-      </div>
-    </div>
+    </nav>
   );
-};
-
-export default Navbar;
+}

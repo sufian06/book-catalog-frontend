@@ -1,12 +1,14 @@
-import { useParams } from "react-router-dom";
-import ProductReview from "../components/ProductReview";
-import { useSingleBookQuery } from "../redux/features/productApi";
-import Loading from "./Loading";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import ProductReview from '@/components/ProductReview';
+import { useSingleProductQuery } from '@/redux/features/products/productApi';
+import { useParams } from 'react-router-dom';
+import Loading from './Loading';
 
 export default function ProductDetails() {
   const { id } = useParams();
 
-  const { data, isLoading, error } = useSingleBookQuery(id);
+  const { data: product, isLoading, error } = useSingleProductQuery(id);
 
   if (isLoading) {
     return <Loading />;
@@ -15,31 +17,18 @@ export default function ProductDetails() {
   return (
     <>
       <div className="flex max-w-7xl mx-auto items-center border-b border-gray-300">
-        <div className="w-[50%]">
-          <img src={data?.data?.image} alt="" />
+        <div className="w-[50%] mr-2">
+          <img src={product?.data?.image} alt="" />
         </div>
-        <div className="w-[50%] space-y-3">
-          <h1 className="text-3xl font-semibold">{data?.data?.title}</h1>
-          <div>
-            <h2>
-              Author:
-              <span>{data?.data?.author}</span>
-            </h2>
-            <h2>
-              Genre:
-              <span>{data?.data?.genre}</span>
-            </h2>
-            <h2>
-              Publish:
-              <span>{data?.data?.publicationDate}</span>
-            </h2>
-          </div>
-          {data?.data?.description && (
-            <p>
-              <span>Description: </span>
-              {data?.data?.description}
-            </p>
-          )}
+        <div className="w-[50%] space-y-3 ml-2">
+          <h1 className="text-3xl font-semibold">
+            Title: {product?.data?.title}
+          </h1>
+          <p className="text-xl">Author: {product?.data?.author}</p>
+          <p className="text-xl">Genre: {product?.data?.genre}</p>
+          <p className="text-xl">
+            Publish Date: {product?.data?.publicationDate}
+          </p>
         </div>
       </div>
       <ProductReview id={id!} />

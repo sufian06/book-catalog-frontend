@@ -1,18 +1,17 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
-import { cn } from "../lib/utils";
-import { loginUser } from "../redux/features/user/userSlice";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { loginUser } from '@/redux/features/user/userSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { FcGoogle } from 'react-icons/fc';
+import { useNavigate } from 'react-router-dom';
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -35,18 +34,17 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
 
   const onSubmit = (data: LoginFormInputs) => {
     console.log(data);
-
     dispatch(loginUser({ email: data.email, password: data.password }));
   };
 
   useEffect(() => {
     if (user.email && !isLoading) {
-      navigate("/");
+      navigate('/');
     }
   }, [user.email, isLoading, navigate]);
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className={cn('grid gap-6', className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
@@ -60,7 +58,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              {...register("email", { required: "Email is required" })}
+              {...register('email', { required: 'Email is required' })}
             />
             {errors.email && <p>{errors.email.message}</p>}
             <Input
@@ -69,7 +67,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
               type="password"
               autoCapitalize="none"
               autoComplete="password"
-              {...register("password", { required: "Password is required" })}
+              {...register('password', { required: 'Password is required' })}
             />
             {errors.password && <p>{errors.password.message}</p>}
           </div>

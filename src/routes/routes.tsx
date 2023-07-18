@@ -1,15 +1,17 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import AddNewBook from "../pages/AddNewBook";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import ProductDetails from "../pages/ProductDetails";
-import Products from "../pages/Products";
-import Signup from "../pages/Signup";
+import App from '@/App';
+import Checkout from '@/pages/Checkout';
+import Home from '@/pages/Home';
+import Login from '@/pages/Login';
+import NotFound from '@/pages/NotFound';
+import ProductDetails from '@/pages/ProductDetails';
+import Products from '@/pages/Products';
+import Signup from '@/pages/Signup';
+import { createBrowserRouter } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
 
 const routes = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
     children: [
       {
@@ -17,26 +19,34 @@ const routes = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/books",
+        path: '/books',
         element: <Products />,
       },
       {
-        path: "/books/:id",
+        path: '/book-details/:id',
         element: <ProductDetails />,
       },
       {
-        path: "/books/add-new-book",
-        element: <AddNewBook />,
+        path: '/checkout',
+        element: (
+          <PrivateRoute>
+            <Checkout />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
   {
-    path: "/signup",
+    path: '/signup',
     element: <Signup />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 
