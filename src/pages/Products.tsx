@@ -11,7 +11,7 @@ export default function Products() {
   // console.log(data.data);
 
   return (
-    <div className="mt-4 flex flex-wrap gap-4">
+    <div className="my-8 flex flex-wrap gap-4">
       {data?.data?.map((product: IProduct) => (
         <ProductCard key={product._id} product={product} />
       ))}

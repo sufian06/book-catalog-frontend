@@ -1,13 +1,21 @@
+import { signOut } from "firebase/auth";
 import React from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../lib/firebase.config";
+import { setUser } from "../redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const Navbar = () => {
-  const user = {
-    uid: false,
-  };
+  const { user } = useAppSelector((state) => state.user);
 
-  const handleLogOut = () => {
-    console.log("logout");
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    console.log("Logout");
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      dispatch(setUser(null));
+    });
   };
 
   const menuItems = (
@@ -19,13 +27,13 @@ const Navbar = () => {
         <Link to="/books">All Books</Link>
       </li>
 
-      {user?.uid ? (
+      {user?.email ? (
         <>
           <li className="hover:bg-accent hover:text-white rounded-md">
             <Link to="/books/add-new-book">Add New</Link>
           </li>
           <li className="hover:bg-accent hover:text-white rounded-md">
-            <button onClick={handleLogOut}>Sign out</button>
+            <button onClick={handleLogout}>Sign out</button>
           </li>
         </>
       ) : (
