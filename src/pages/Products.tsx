@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ProductCard from "../components/ProductCard";
-import { useGetBooksQuery } from "../redux/api/apiSlice";
+import { useGetBooksQuery } from "../redux/features/productApi";
 import { IProduct } from "../types/productTypes";
 
 export default function Products() {
