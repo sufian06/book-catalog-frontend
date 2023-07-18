@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
+import AddNewBook from "../pages/AddNewBook";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import ProductDetails from "../pages/ProductDetails";
@@ -22,6 +23,10 @@ const routes = createBrowserRouter([
       {
         path: "/books/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/books/add-new-book",
+        element: <AddNewBook />,
       },
     ],
   },

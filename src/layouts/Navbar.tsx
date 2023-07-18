@@ -22,7 +22,7 @@ const Navbar = () => {
       {user?.uid ? (
         <>
           <li className="hover:bg-accent hover:text-white rounded-md">
-            <Link to="/add-new-book">Add New</Link>
+            <Link to="/books/add-new-book">Add New</Link>
           </li>
           <li className="hover:bg-accent hover:text-white rounded-md">
             <button onClick={handleLogOut}>Sign out</button>
