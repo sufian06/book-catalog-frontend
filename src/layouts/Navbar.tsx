@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const user = {
-    uid: true,
+    uid: false,
   };
 
   const handleLogOut = () => {
